@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RandomShowTextView">
+        <attr name="text" format="string" />
+        <attr name="textColor" format="color" />
+        <attr name="duration" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="Themes">
+        <attr name="RandomShowTextViewStyle" format="reference" />
+    </declare-styleable>
+</resources>
