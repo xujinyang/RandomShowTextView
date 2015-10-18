@@ -23,6 +23,9 @@ import java.util.Collections;
  * Created by james on 14/10/15.
  */
 public class RandomShowTextView extends TextView {
+    private final int default_text_color = Color.BLACK;
+    private final int default_duration_time = 2000;
+
     private SpannableString spannableString;
     private AccelerateDecelerateInterpolator mSmoothInterpolator;
     private String text;
@@ -42,8 +45,8 @@ public class RandomShowTextView extends TextView {
                 defStyleAttr, 0);
 
         text = attributes.getString(R.styleable.RandomShowTextView_text);
-        duration = attributes.getInt(R.styleable.RandomShowTextView_duration, 2000);
-        color = attributes.getColor(R.styleable.RandomShowTextView_textColor, Color.BLACK);
+        duration = attributes.getInt(R.styleable.RandomShowTextView_duration, default_duration_time);
+        color = attributes.getColor(R.styleable.RandomShowTextView_textColor, default_text_color);
         init();
         fireWork();
     }
@@ -67,6 +70,15 @@ public class RandomShowTextView extends TextView {
         objectAnimator.setInterpolator(mSmoothInterpolator);
         objectAnimator.setDuration(duration);
         objectAnimator.start();
+    }
+
+    private void setText(String text) {
+        this.text = text;
+        fireWork();
+    }
+    
+    private void startAnimaion() {
+        fireWork();
     }
 
     private static final Property<FireworksSpanGroup, Float> FIREWORKS_GROUP_PROGRESS_PROPERTY =
