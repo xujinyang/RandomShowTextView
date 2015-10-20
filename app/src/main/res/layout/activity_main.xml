@@ -9,10 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <me.jamesxu.randomshowtextview.RandomShowTextView
+
+    <me.jamesxu.randomshowtextview.RandomDropTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:textColor="@android:color/holo_blue_dark"
-        app:duration="3000"
-        app:text="孤单不是与生俱来，而是由你爱上一个人的那一刻开始" />
+        android:layout_centerInParent="true"
+        app:duration="500"
+        app:text="孤单不是与生俱来"
+        app:textColor="@android:color/black" />
+
+
 </RelativeLayout>
