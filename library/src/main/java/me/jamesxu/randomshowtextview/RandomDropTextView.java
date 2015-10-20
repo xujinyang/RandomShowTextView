@@ -1,8 +1,6 @@
 package me.jamesxu.randomshowtextview;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -10,7 +8,11 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -62,44 +64,42 @@ public class RandomDropTextView extends LinearLayout {
             textViewList.add(textView);
             addView(textView);
         }
+        Collections.shuffle(textViewList);
     }
 
     private void playNext() {
         AnimatorSet animatorSet = new AnimatorSet();
         TextView textView = textViewList.get(index);
         textView.setVisibility(VISIBLE);
-        animatorSet.setDuration(duration);
-        animatorSet.playTogether(
-                ObjectAnimator.ofFloat(textView, "alpha", 0, 1, 1, 1),
-                ObjectAnimator.ofFloat(textView, "translationY", -textView.getHeight(), 30, -10, 0)
-        );
-        animatorSet.start();
+        YoYo.with(Techniques.ZoomInLeft)
+                .duration(700)
+                .withListener(new com.nineoldandroids.animation.Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(com.nineoldandroids.animation.Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
+                        if (index == textViewList.size()) {
+                            index = 0;
+                            return;
+                        }
+                        playNext();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(com.nineoldandroids.animation.Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(com.nineoldandroids.animation.Animator animation) {
+
+                    }
+                })
+                .playOn(textView);
         index++;
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if (index == textViewList.size()) {
-                    index = 0;
-                    return;
-                }
-                playNext();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
     }
 
     private void setText(String text) {
